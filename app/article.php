@@ -25,10 +25,19 @@ class article extends Model
 
     public function getMyArticle(){
 
-        $article=article::where('user_id',1);
+        $article=article::where('user_id',1)->get();
 
         return $article;
 
+    }
+
+    public function createNewArticle($data){
+
+        return article::create([
+            'article_title' => $data['article_title'],
+            'article_body' => $data['article_body'],
+            'user_id' => auth()->user()->id
+        ]);
     }
 
 

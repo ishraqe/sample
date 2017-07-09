@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\article;
 use App\User;
+use Session;
 class HomeController extends Controller
 {
     /**
@@ -29,9 +30,7 @@ class HomeController extends Controller
         $article=new article();
 
         $myArticle=$article->getMyArticle();
-        foreach ($myArticle as $m){
-            dd($m);
-        }
+
         return view('home')->with([
             'myArticle' => $myArticle
         ]);
@@ -45,7 +44,22 @@ class HomeController extends Controller
            'article' => $article->getAllArticle()
        ]);
     }
-    public function createArticle(){
+    public function createArticle(Request $request){
+        $this->validate($request,[
+            'article_title' =>'required',
+            'article_body' =>'required'
+        ]);
+
+        $data=$request->all();
+
+        $article=new article();
+        $createArricle=$article->createNewArticle($data);
+        if ($createArricle){
+
+            Session::flash('added_confirmation', 'Your article has been added!');
+
+            return redirect()->back();
+        }
 
     }
 }

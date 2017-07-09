@@ -18,4 +18,5 @@ Route::get('/', 'HomeController@index')->name('index');
 
 Route::get('/home', 'HomeController@home')->name('home')->middleware('auth');
 
-Route::get('/home/create/article','HomeController@createArticle')->name('user.article')->middleware('auth');
+Route::post('/home/create/article','HomeController@createArticle')->name('user.article')->middleware('auth');
+
