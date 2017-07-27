@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\article;
 use App\User;
 use Session;
+use Illuminate\Http\Response;
 class HomeController extends Controller
 {
     /**
@@ -61,5 +62,61 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
+    }
+    public function singleArticle($id)
+    {
+        $article=new article();
+
+        $SingleArticle=$article->getMyArticleById($id);
+
+       
+
+        return view('single')->with([
+            'SingleArticle' => $SingleArticle
+        ]);
+    }
+
+    public function singleArticleEdit($id)
+    {
+       $article=new article();
+
+        $SingleArticle=$article->getMyArticleById($id);
+
+         return view('edit')->with([
+            'SingleArticle' => $SingleArticle
+        ]);
+    }
+
+     public function singleArticleMakeEdit(Request $request,$id)
+    {
+        $input=$request->all();
+ 
+        
+       $article=new article();
+
+        $SingleArticle=$article->getMyArticleById($id);
+
+        
+
+        $SingleArticle->article_title=$input['article_title'];
+        $SingleArticle->article_body=$input['article_body'];
+
+        $SingleArticle->save();
+
+        return redirect('/home' );
+    }
+
+     public function singleArticleDelete($id)
+    {
+         
+        
+       $article=new article();
+
+        $SingleArticle=$article->getMyArticleById($id);
+
+
+        $SingleArticle->delete();
+
+        return redirect('/home');
     }
 }

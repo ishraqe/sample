@@ -36,7 +36,7 @@
                 @foreach($myArticle as $a)
                     <li>
                         <h6>
-                            {{$a->article_title}}<br>
+                           <a href="{{route('article.single',['id'=>$a->id])}}">{{$a->article_title}}</a> <br>
                             <small> {{$a->article_body}}</small>
                         </h6>
 

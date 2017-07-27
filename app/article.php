@@ -25,7 +25,17 @@ class article extends Model
 
     public function getMyArticle(){
 
-        $article=article::where('user_id',1)->get();
+        $article=article::where('user_id',auth()->user()->id)->get();
+
+        return $article;
+
+    }
+
+    public function getMyArticleById($id){
+
+
+        $article=article::find($id);
+
 
         return $article;
 
